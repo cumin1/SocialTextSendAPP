@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
 
 // 用户路由
 const userRouter = require('./users')
-router.use("/users",userRouter)
+router.use("/api/users",userRouter)
+
 
 module.exports = router;
