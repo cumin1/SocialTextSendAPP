@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://8.130.123.186:27017/socialTextApp', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
