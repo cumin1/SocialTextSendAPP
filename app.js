@@ -6,13 +6,14 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const config = require('./config'); // 引入配置文件
 
 var app = express();
 
 const mongoose = require('mongoose');
 
 // 连接到 MongoDB
-mongoose.connect('mongodb://8.130.123.186:27017/socialTextApp', {
+mongoose.connect(config.mongoURI, {
 useNewUrlParser: true,
 useUnifiedTopology: true
 });
