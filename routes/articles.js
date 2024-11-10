@@ -63,7 +63,7 @@ router.get("/", async function (req, res, next) {
 })
 
 // 获取文章详情接口  
-router.get("/:article_id",async function (req, res, next) {
+router.get("/:article_id", async function (req, res, next) {
     const article_id = req.params.article_id;
 
     try {
@@ -85,6 +85,41 @@ router.get("/:article_id",async function (req, res, next) {
         })
     } catch (err) {
         res.status(500).json({
+            status: "error",
+            message: err.message
+        })
+    }
+
+})
+
+// 更新文章接口
+router.put("/:article_id", async function (req, res, next) {
+    const article_id = req.params.article_id;
+    const { title, content, tags } = req.body;
+
+    try {
+        const updateArticle = await Article.findOneAndUpdate(
+            { _id: article_id },
+            { title, content, tags },
+            { new: true, runValidators: true }
+        )
+
+        if (!updateArticle) {
+            return res.status(404).json({
+                status: "error",
+                message: "文章不存在!"
+            })
+        }
+
+        // 返回更新后的文章
+        return res.status(200).json({
+            status: "success",
+            message: "文章更新成功",
+            data: updateArticle
+        });
+
+    } catch (err) {
+        return res.status(500).json({
             status: "error",
             message: err.message
         })
