@@ -127,5 +127,32 @@ router.put("/:article_id", async function (req, res, next) {
 
 })
 
+// 删除文章接口
+router.delete("/:article_id", async function (req, res, next) {
+    const article_id = req.params.article_id;
+
+    try {
+        const deleteArticle = await Article.findOneAndDelete({ _id: article_id });
+
+        if (!deleteArticle) {
+            return res.status(404).json({
+                status: "error",
+                message: "文章不存在!"
+            })
+        }
+
+        return res.status(200).json({
+            status: "success",
+            message: "文章删除成功!"
+        })
+        
+    } catch (err) {
+        res.status(500).json({
+            status: "error",
+            message: err.message
+        })
+    }
+})
+
 
 module.exports = router;
